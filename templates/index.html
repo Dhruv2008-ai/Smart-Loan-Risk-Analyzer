@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Smart Loan Risk Analyzer</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 45px 20px;
+            background: linear-gradient(135deg, #0f172a, #1e1b4b, #312e81);
+            color: #111827;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        /* Header */
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            display: inline-block;
+            padding: 10px 18px;
+            margin-bottom: 15px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: #7c3aed;
+        }
+
+        .header p {
+            color: #cbd5e1;
+            font-size: 16px;
+        }
+
+        /* Main Card */
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.97);
+            padding: 38px;
+            border-radius: 24px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .form-title {
+            font-size: 24px;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        /* Form Grid */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 12px;
+            background: #f9fafb;
+            color: #111827;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .input-group input::placeholder {
+            color: #9ca3af;
+        }
+
+        .input-group input:hover,
+        .input-group select:hover {
+            border-color: #a78bfa;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            background: white;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+        }
+
+        /* Button */
+
+        .button-container {
+            margin-top: 32px;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 13px;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed, #9333ea);
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.35);
+            transition: all 0.25s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.45);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Result */
+
+        .result-card {
+            margin-top: 25px;
+            padding: 22px;
+            border-radius: 16px;
+            text-align: center;
+            background: #f5f3ff;
+            border: 1px solid #ddd6fe;
+        }
+
+        .result-card h2 {
+            color: #4f46e5;
+            margin-bottom: 10px;
+        }
+
+        .result-card p {
+            font-size: 18px;
+            color: #374151;
+        }
+
+        /* Footer */
+
+        .footer-text {
+            text-align: center;
+            margin-top: 22px;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        .footer-text span {
+            color: #6366f1;
+            font-weight: 600;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 650px) {
+
+            body {
+                padding: 25px 15px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .form-card {
+                padding: 25px 20px;
+                border-radius: 18px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <!-- Header -->
+
+        <div class="header">
+
+            <div class="logo">
+                🤖 AI POWERED
+            </div>
+
+            <h1>Smart Loan Risk Analyzer</h1>
+
+            <p>
+                Analyze loan applications using Machine Learning
+            </p>
+
+        </div>
+
+
+        <!-- Form Card -->
+
+        <div class="form-card">
+
+            <h2 class="form-title">
+                Applicant Information
+            </h2>
+
+            <p class="form-subtitle">
+                Enter the applicant's financial details to analyze loan risk.
+            </p>
+
+
+            <!-- MAIN FORM -->
+
+            <form method="POST">
+
+                <div class="form-grid">
+
+
+                    <!-- 1 Applicant Income -->
+
+                    <div class="input-group">
+
+                        <label>Applicant Income</label>
+
+                        <input
+                            type="number"
+                            name="Applicant_Income"
+                            placeholder="e.g. 50000"
+                            required>
+
+                    </div>
+
+
+                    <!-- 2 Coapplicant Income -->
+
+                    <div class="input-group">
+
+                        <label>Coapplicant Income</label>
+
+                        <input
+                            type="number"
+                            name="Coapplicant_Income"
+                            placeholder="e.g. 25000"
+                            required>
+
+                    </div>
+
+
+                    <!-- 3 Employment Status -->
+
+                    <div class="input-group">
+
+                        <label>Employment Status</label>
+
+                        <select name="Employment_Status" required>
+
+                            <option value="">
+                                Select employment status
+                            </option>
+
+                            <option value="Salaried">
+                                Salaried
+                            </option>
+
+                            <option value="Self-employed">
+                                Self-employed
+                            </option>
+
+                            <option value="Contract">
+                                Contract
+                            </option>
+
+                            <option value="Unemployed">
+                                Unemployed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- 4 Age -->
+
+                    <div class="input-group">
+
+                        <label>Age</label>
+
+                        <input
+                            type="number"
+                            name="Age"
+                            placeholder="e.g. 30"
+                            min="18"
+                            required>
+
+                    </div>
+
+
+                    <!-- 5 Marital Status -->
+
+                    <div class="input-group">
+
+                        <label>Marital Status</label>
+
+                        <select name="Marital_Status" required>
+
+                            <option value="">
+                                Select marital status
+                            </option>
+
+                            <option value="Married">
+                                Married
+                            </option>
+
+                            <option value="Single">
+                                Single
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- 6 Dependents -->
+
+                    <div class="input-group">
+
+                        <label>Dependents</label>
+
+                        <input
+                            type="number"
+                            name="Dependents"
+                            placeholder="e.g. 2"
+                            min="0"
+                            required>
+
+                    </div>
+
+
+                    <!-- 7 Credit Score -->
+
+                    <div class="input-group">
+
+                        <label>Credit Score</label>
+
+                        <input
+                            type="number"
+                            name="Credit_Score"
+                            placeholder="e.g. 750"
+                            required>
+
+                    </div>
+
+
+                    <!-- 8 Existing Loans -->
+
+                    <div class="input-group">
+
+                        <label>Existing Loans</label>
+
+                        <input
+                            type="number"
+                            name="Existing_Loans"
+                            placeholder="e.g. 2"
+                            min="0"
+                            required>
+
+                    </div>
+
+
+                    <!-- 9 DTI Ratio -->
+
+                    <div class="input-group">
+
+                        <label>DTI Ratio</label>
+
+                        <input
+                            type="number"
+                            name="DTI_Ratio"
+                            placeholder="e.g. 0.35"
+                            step="0.01"
+                            required>
+
+                    </div>
+
+
+                    <!-- 10 Savings -->
+
+                    <div class="input-group">
+
+                        <label>Savings</label>
+
+                        <input
+                            type="number"
+                            name="Savings"
+                            placeholder="e.g. 100000"
+                            required>
+
+                    </div>
+
+
+                    <!-- 11 Collateral Value -->
+
+                    <div class="input-group">
+
+                        <label>Collateral Value</label>
+
+                        <input
+                            type="number"
+                            name="Collateral_Value"
+                            placeholder="e.g. 800000"
+                            required>
+
+                    </div>
+
+
+                    <!-- 12 Loan Amount -->
+
+                    <div class="input-group">
+
+                        <label>Loan Amount</label>
+
+                        <input
+                            type="number"
+                            name="Loan_Amount"
+                            placeholder="e.g. 500000"
+                            required>
+
+                    </div>
+
+
+                    <!-- 13 Loan Term -->
+
+                    <div class="input-group">
+
+                        <label>Loan Term</label>
+
+                        <input
+                            type="number"
+                            name="Loan_Term"
+                            placeholder="e.g. 60 months"
+                            required>
+
+                    </div>
+
+
+                    <!-- 14 Loan Purpose -->
+
+                    <div class="input-group">
+
+                        <label>Loan Purpose</label>
+
+                        <select name="Loan_Purpose" required>
+
+                            <option value="">
+                                Select loan purpose
+                            </option>
+
+                            <option value="Personal">
+                                Personal
+                            </option>
+
+                            <option value="Car">
+                                Car
+                            </option>
+
+                            <option value="Business">
+                                Business
+                            </option>
+
+                            <option value="Home">
+                                Home
+                            </option>
+
+                            <option value="Education">
+                                Education
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- 15 Property Area -->
+
+                    <div class="input-group">
+
+                        <label>Property Area</label>
+
+                        <select name="Property_Area" required>
+
+                            <option value="">
+                                Select property area
+                            </option>
+
+                            <option value="Urban">
+                                Urban
+                            </option>
+
+                            <option value="Semiurban">
+                                Semiurban
+                            </option>
+
+                            <option value="Rural">
+                                Rural
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- 16 Education Level -->
+
+                    <div class="input-group">
+
+                        <label>Education Level</label>
+
+                        <select name="Education_Level" required>
+
+                            <option value="">
+                                Select education level
+                            </option>
+
+                            <option value="Not Graduate">
+                                Not Graduate
+                            </option>
+
+                            <option value="Graduate">
+                                Graduate
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- 17 Gender -->
+
+                    <div class="input-group">
+
+                        <label>Gender</label>
+
+                        <select name="Gender" required>
+
+                            <option value="">
+                                Select gender
+                            </option>
+
+                            <option value="Female">
+                                Female
+                            </option>
+
+                            <option value="Male">
+                                Male
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- 18 Employer Category -->
+
+                    <div class="input-group">
+
+                        <label>Employer Category</label>
+
+                        <select name="Employer_Category" required>
+
+                            <option value="">
+                                Select employer category
+                            </option>
+
+                            <option value="Private">
+                                Private
+                            </option>
+
+                            <option value="Government">
+                                Government
+                            </option>
+
+                            <option value="Unemployed">
+                                Unemployed
+                            </option>
+
+                            <option value="MNC">
+                                MNC
+                            </option>
+
+                            <option value="Business">
+                                Business
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- Button -->
+
+                <div class="button-container">
+
+                    <button type="submit">
+                        🔍 Analyze Loan Risk
+                    </button>
+
+                </div>
+
+
+            </form>
+
+
+            <!-- Prediction Result -->
+
+            {% if prediction %}
+
+            <div class="result-card">
+
+                <h2>Prediction Result</h2>
+
+                <p>
+                    Loan Status:
+                    <strong>{{ prediction }}</strong>
+                </p>
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- Footer -->
+
+            <p class="footer-text">
+
+                Powered by <span>Machine Learning</span>
+                • Smart Loan Risk Analyzer
+
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
